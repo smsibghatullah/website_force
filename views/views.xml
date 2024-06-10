@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="website_force.list">
+      <field name="name">website_force list</field>
+      <field name="model">website_force.website_force</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="website_force.action_window">
+      <field name="name">website_force window</field>
+      <field name="res_model">website_force.website_force</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="website_force.action_server">
+      <field name="name">website_force server</field>
+      <field name="model_id" ref="model_website_force_website_force"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="website_force" id="website_force.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="website_force.menu_1" parent="website_force.menu_root"/>
+    <menuitem name="Menu 2" id="website_force.menu_2" parent="website_force.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="website_force.menu_1_list" parent="website_force.menu_1"
+              action="website_force.action_window"/>
+    <menuitem name="Server to list" id="website_force" parent="website_force.menu_2"
+              action="website_force.action_server"/>
+-->
+  </data>
+</odoo>
