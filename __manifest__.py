@@ -1,35 +1,14 @@
-# -*- coding: utf-8 -*-
+# __manifest__.py
 {
-    'name': "website_force",
-
-    'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
-
-    'description': """
-        Long description of module's purpose
-    """,
-
-    'author': "My Company",
-    'website': "https://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/16.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'website',
-    'version': '0.1',
-
-    # any module necessary for this one to work correctly
-    'depends': ['base','website'],
-
-    # always loaded
-    'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
-    ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'name': 'Website Force Domain',
+    'version': '1.0',
+    'summary': 'Force specific websites based on domain',
+    'description': 'This module forces the use of specific websites based on the domain.',
+    'author': 'Your Name',
+    'category': 'Website',
+    'depends': ['base', 'website','web'],
+    'data': [],
+    'installable': True,
+    'auto_install': False,
+    'application': True,
 }
