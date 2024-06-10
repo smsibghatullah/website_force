@@ -41,7 +41,7 @@ class Website(Home):
             domain_from = request.httprequest.environ.get('HTTP_HOST', '')
             domain_to = get_base_domain(website.domain)
             if domain_from != domain_to:
-                url_to = werkzeug.urls.url_join(website.domain, '/%s?isredir=1&path=%s' % (website.id, path))
+                url_to = werkzeug.urls.url_join(website.domain, '/website/force/%s?isredir=1&path=%s' % (website.id, path))
                 return request.redirect(url_to)
         website._force()
         return request.redirect(path)
