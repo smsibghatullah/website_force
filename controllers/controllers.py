@@ -1,47 +1,31 @@
-import base64
-import datetime
-import json
-import os
 import logging
-import re
-import requests
-import werkzeug.urls
-import werkzeug.utils
-import werkzeug.wrappers
-
-from itertools import islice
-from lxml import etree
-from textwrap import shorten
-from werkzeug.exceptions import NotFound
-from xml.etree import ElementTree as ET
-import odoo
-
-from odoo import http, models, fields, _
-from odoo.exceptions import AccessError
-from odoo.http import request, SessionExpiredException
-from odoo.osv import expression
-from odoo.tools import OrderedSet, escape_psql, html_escape as escape
-from odoo.addons.http_routing.models.ir_http import slug, slugify, _guess_mimetype
-from odoo.addons.portal.controllers.portal import pager as portal_pager
-from odoo.addons.portal.controllers.web import Home
-from odoo.addons.web.controllers.binary import Binary
+from odoo import http
+from odoo.http import request
 from odoo.addons.website.tools import get_base_domain
+import werkzeug.urls
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
-
-class Website(Home):
-
-    @http.route('/akghardware/<int:website_id>', type='http', auth="none", sitemap=False)
+class Website(http.Controller):
+    @http.route('/akghardware/<int:website_id>', type='http', auth="none", sitemap=False , website=True)
     def website_force_akghardware(self, website_id, path='/', isredir=False, **kw):
-        print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
-        website = request.env['website'].browse(website_id)
+        _logger.info("Route accessed with website_id: %s", website_id)
+        website = request.env['website'].sudo().browse(website_id)
+
+        if not website.exists():
+            _logger.error("Website with ID %s not found", website_id)
+            return request.not_found()
 
         if not isredir and website.domain:
             domain_from = request.httprequest.environ.get('HTTP_HOST', '')
             domain_to = get_base_domain(website.domain)
+            _logger.info("Domain from request: %s, Domain to redirect: %s", domain_from, domain_to)
+            
             if domain_from != domain_to:
-                url_to = werkzeug.urls.url_join(website.domain, '/website/force/%s?isredir=1&path=%s' % (website.id, path))
+                url_to = werkzeug.urls.url_join(website.domain, '/akghardware/%d?isredir=1&path=%s' % (website.id, path))
+                _logger.info("Redirecting to: %s", url_to)
                 return request.redirect(url_to)
-        website._force()
+
+        _logger.info("Forcing the website and redirecting to path: %s", path)
+        website.sudo()._force()
         return request.redirect(path)
