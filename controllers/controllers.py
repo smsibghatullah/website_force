@@ -5,9 +5,9 @@ from odoo.http import request
 class WebsiteForce(http.Controller):
     @http.route('/website/force/akghardware/<int:website_id>', type='http', auth="public", website=True, sitemap=False, multilang=False)
     def website_force(self, website_id, path='/', isredir=False, **kw):
-        if not request.env.user.has_group('website.group_multi_website'):
-            return request.redirect(path)
-
+        # if not request.env.user.has_group('website.group_multi_website'):
+        #     return request.redirect(path)
+        print("pppppppppppppppppppppppppppppppppppppppppppppppppppppp")
         website = request.env['website'].browse(website_id)
 
         if not isredir and website.domain:
